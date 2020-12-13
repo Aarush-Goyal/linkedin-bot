@@ -4,13 +4,17 @@ const userInfo = require("../config/userInfo");
 describe("Linkedin Connection Test", () => {
   it("Brower Launched", async () => {
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       // slowMo: 10,
       // devtools: true,
+      defaultViewport: {
+        width: 1920,
+        height: 1080,
+      },
     });
     // you can uncomment slow mo, devtools and you can turn the headless to false to see how the test is running
     const page = await browser.newPage();
-    // await page.waitForTimeout(3000); /// acts as delay function in puppeteer
+    await page.setViewport({ height: 960, width: 1200 });
     await page.goto("https://linkedin.com");
     await page.type("#session_key", userInfo.Email);
     await page.type("#session_password", userInfo.Password);
@@ -33,7 +37,7 @@ describe("Linkedin Connection Test", () => {
             }
           }
         });
-      }, 5000);
+      }, 10000);
     });
   });
 });
